@@ -160,7 +160,7 @@ public class Principal extends javax.swing.JFrame {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "BMP, JPG, PNG & GIF Images", "jpg", "png", "gif");
-        chooser.setCurrentDirectory(new File("/home/luis/Dropbox/pdi/images"));
+        chooser.setCurrentDirectory(new File("images"));
         chooser.setFileFilter(filter);
         chooser.setDialogTitle("Abrir Imagem");
         int op = chooser.showOpenDialog(this);
