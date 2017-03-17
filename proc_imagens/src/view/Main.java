@@ -1,6 +1,6 @@
 package view;
 
-import controller.Imagem;
+import controller.Image;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
@@ -10,13 +10,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.filechooser.*;
 
-public class Principal extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame {
 
     private BufferedImage imagem_carregada;
     private int flag = 0;
     private String path;
 
-    public Principal() {
+    public Main() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -208,7 +208,7 @@ public class Principal extends javax.swing.JFrame {
             }
             setSize(imagem_carregada.getWidth() + 25, imagem_carregada.getHeight() + 70);
         } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Erro IO Exception! Verifique se o "
                     + "arquivo especificado existe e tente novamente.");
         }
@@ -240,13 +240,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_salvarActionPerformed
 
     private void negativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negativoActionPerformed
-        new Imagem().negativo(imagem_carregada);
+        new Image().negativo(imagem_carregada);
         this.imageUpdate(imagem_carregada, ALLBITS, 0, 0,
                 imagem_carregada.getWidth(), imagem_carregada.getHeight());
     }//GEN-LAST:event_negativoActionPerformed
 
     private void escala_de_cinzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_escala_de_cinzaActionPerformed
-        new Imagem().escala_de_cinza(imagem_carregada);
+        new Image().escala_de_cinza(imagem_carregada);
         this.imageUpdate(imagem_carregada, ALLBITS, 0, 0,
                 imagem_carregada.getWidth(), imagem_carregada.getHeight());
     }//GEN-LAST:event_escala_de_cinzaActionPerformed
@@ -262,7 +262,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void canal_vermelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canal_vermelhoActionPerformed
-        new Imagem().canal_vermelho(imagem_carregada);
+        new Image().canal_vermelho(imagem_carregada);
 
         this.imagem_um_canal();
         ImageIcon icon = new ImageIcon(imagem_carregada);
@@ -271,7 +271,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_canal_vermelhoActionPerformed
 
     private void canal_verdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canal_verdeActionPerformed
-        new Imagem().canal_verde(imagem_carregada);
+        new Image().canal_verde(imagem_carregada);
 
         this.imagem_um_canal();
         ImageIcon icon = new ImageIcon(imagem_carregada);
@@ -280,7 +280,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_canal_verdeActionPerformed
 
     private void canal_azulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canal_azulActionPerformed
-        new Imagem().canal_azul(imagem_carregada);
+        new Image().canal_azul(imagem_carregada);
 
         this.imagem_um_canal();
         ImageIcon icon = new ImageIcon(imagem_carregada);
@@ -289,7 +289,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_canal_azulActionPerformed
 
     private void filtro_sepiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtro_sepiaActionPerformed
-        new Imagem().filtro_sepia(imagem_carregada);
+        new Image().filtro_sepia(imagem_carregada);
         this.imageUpdate(imagem_carregada, ALLBITS, 0, 0,
                 imagem_carregada.getWidth(), imagem_carregada.getHeight());
     }//GEN-LAST:event_filtro_sepiaActionPerformed
@@ -298,7 +298,7 @@ public class Principal extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new Main().setVisible(true);
             }
         });
     }

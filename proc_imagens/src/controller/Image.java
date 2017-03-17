@@ -3,7 +3,7 @@ package controller;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class Imagem {
+public class Image {
     
     public void negativo(BufferedImage imagem_carregada) {
         int width = imagem_carregada.getWidth();
@@ -107,5 +107,11 @@ public class Imagem {
             }
         }
     }
+    
+    public int aply_alfa(int c1, int c2, double alfa) {
+        return (int) (c1 * (1-alfa) + c2 * alfa);
+    }
+    
+    
     
 }
