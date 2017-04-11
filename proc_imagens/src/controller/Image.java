@@ -112,6 +112,54 @@ public class Image {
         return (int) (c1 * (1-alfa) + c2 * alfa);
     }
     
+    public void red_to_blue(BufferedImage imagem_carregada) {
+        int width = imagem_carregada.getWidth();
+        int height = imagem_carregada.getHeight();
+        float[] hsv = new float[3];
+        Color.RGBtoHSB(255, 0, 0, hsv);
+        float red = hsv[0];
+        Color.RGBtoHSB(0, 0, 255, hsv);
+        float blue = hsv[0];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Color cor = new Color(imagem_carregada.getRGB(i, j));
+                int r = cor.getRed();
+                int g = cor.getGreen();
+                int b = cor.getBlue();
+                Color.RGBtoHSB(r, g, b, hsv);
+                if(hsv[0] > 0.95 || hsv[0] < 0.05) {
+                    int rgb = Color.HSBtoRGB(blue, hsv[1], hsv[2]);
+                    Color color = new Color(rgb);
+                    imagem_carregada.setRGB(i, j, color.getRGB());
+                }
+            }
+        }
+    }
+    
+    public void blue_to_red(BufferedImage imagem_carregada) {
+        int width = imagem_carregada.getWidth();
+        int height = imagem_carregada.getHeight();
+        float[] hsv = new float[3];
+        Color.RGBtoHSB(255, 0, 0, hsv);
+        float red = hsv[0];
+        Color.RGBtoHSB(0, 0, 255, hsv);
+        float blue = hsv[0];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Color cor = new Color(imagem_carregada.getRGB(i, j));
+                int r = cor.getRed();
+                int g = cor.getGreen();
+                int b = cor.getBlue();
+                Color.RGBtoHSB(r, g, b, hsv);
+                if(hsv[0] < 0.20 || hsv[0] > 0.45) {
+                    int rgb = Color.HSBtoRGB(0, 0, 0);
+                    Color color = new Color(rgb);
+                    imagem_carregada.setRGB(i, j, color.getRGB());
+                }
+            }
+        }
+    }
+    
     
     
 }

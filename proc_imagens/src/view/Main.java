@@ -12,7 +12,7 @@ import javax.swing.filechooser.*;
 
 public class Main extends javax.swing.JFrame {
 
-    private BufferedImage imagem_carregada;
+    private BufferedImage loaded_image;
     private int flag = 0;
     private String path;
 
@@ -40,6 +40,8 @@ public class Main extends javax.swing.JFrame {
         canal_verde = new javax.swing.JMenuItem();
         canal_azul = new javax.swing.JMenuItem();
         filtro_sepia = new javax.swing.JMenuItem();
+        red_to_blue = new javax.swing.JMenuItem();
+        manter_verde = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,6 +135,22 @@ public class Main extends javax.swing.JFrame {
         });
         menu_imagem.add(filtro_sepia);
 
+        red_to_blue.setText("Red to Blue");
+        red_to_blue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                red_to_blueActionPerformed(evt);
+            }
+        });
+        menu_imagem.add(red_to_blue);
+
+        manter_verde.setText("Manter Verde");
+        manter_verde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manter_verdeActionPerformed(evt);
+            }
+        });
+        menu_imagem.add(manter_verde);
+
         barra_menu.add(menu_imagem);
 
         setJMenuBar(barra_menu);
@@ -169,9 +187,9 @@ public class Main extends javax.swing.JFrame {
             this.path = arq.toString();
             try {
                 //carrega nova imagem
-                imagem_carregada = ImageIO.read(new File(path));
+                loaded_image = ImageIO.read(new File(path));
                 System.out.println("Arquivo aberto com sucesso!");
-                ImageIcon icon = new ImageIcon(imagem_carregada);
+                ImageIcon icon = new ImageIcon(loaded_image);
                 if (flag == 0) {
                     imagem_tela.setIcon(icon);
                     Container contentPane = getContentPane();
@@ -181,7 +199,7 @@ public class Main extends javax.swing.JFrame {
                 } else {
                     imagem_tela.setIcon(icon);
                 }
-                setSize(imagem_carregada.getWidth() + 25, imagem_carregada.getHeight() + 70);
+                setSize(loaded_image.getWidth() + 25, loaded_image.getHeight() + 70);
             } catch (IOException e) {
                 System.out.println("Erro IO Exception! Verifique se o "
                         + "arquivo especificado existe e tente novamente.");
@@ -194,9 +212,9 @@ public class Main extends javax.swing.JFrame {
     private void reabrir_imagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reabrir_imagemActionPerformed
         try {
             //recarrega imagem
-            imagem_carregada = ImageIO.read(new File(path));
+            loaded_image = ImageIO.read(new File(path));
             System.out.println("Arquivo aberto com sucesso!");
-            ImageIcon icon = new ImageIcon(imagem_carregada);
+            ImageIcon icon = new ImageIcon(loaded_image);
             if (flag == 0) {
                 imagem_tela.setIcon(icon);
                 Container contentPane = getContentPane();
@@ -206,7 +224,7 @@ public class Main extends javax.swing.JFrame {
             } else {
                 imagem_tela.setIcon(icon);
             }
-            setSize(imagem_carregada.getWidth() + 25, imagem_carregada.getHeight() + 70);
+            setSize(loaded_image.getWidth() + 25, loaded_image.getHeight() + 70);
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Erro IO Exception! Verifique se o "
@@ -228,7 +246,7 @@ public class Main extends javax.swing.JFrame {
             File arq = chooser.getSelectedFile();
             String path = arq.toString();
             try {
-                ImageIO.write(imagem_carregada, "png", new File(path));
+                ImageIO.write(loaded_image, "png", new File(path));
                 System.out.println("Arquivo salvo com sucesso!");
             } catch (IOException e) {
                 System.out.println("Erro IO Exception! Verifique se o "
@@ -240,59 +258,71 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_salvarActionPerformed
 
     private void negativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negativoActionPerformed
-        new Image().negativo(imagem_carregada);
-        this.imageUpdate(imagem_carregada, ALLBITS, 0, 0,
-                imagem_carregada.getWidth(), imagem_carregada.getHeight());
+        new Image().negativo(loaded_image);
+        this.imageUpdate(loaded_image, ALLBITS, 0, 0,
+                loaded_image.getWidth(), loaded_image.getHeight());
     }//GEN-LAST:event_negativoActionPerformed
 
     private void escala_de_cinzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_escala_de_cinzaActionPerformed
-        new Image().escala_de_cinza(imagem_carregada);
-        this.imageUpdate(imagem_carregada, ALLBITS, 0, 0,
-                imagem_carregada.getWidth(), imagem_carregada.getHeight());
+        new Image().escala_de_cinza(loaded_image);
+        this.imageUpdate(loaded_image, ALLBITS, 0, 0,
+                loaded_image.getWidth(), loaded_image.getHeight());
     }//GEN-LAST:event_escala_de_cinzaActionPerformed
 
     private void imagem_um_canal() {
         // coloca a imagem com apenas um canal e economiza o tamanho da imagem
-        BufferedImage imagem_aux = new BufferedImage(imagem_carregada.getWidth(),
-                imagem_carregada.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+        BufferedImage imagem_aux = new BufferedImage(loaded_image.getWidth(),
+                loaded_image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         Graphics g = imagem_aux.getGraphics();
-        g.drawImage(imagem_carregada, 0, 0, null);
+        g.drawImage(loaded_image, 0, 0, null);
         g.dispose();
-        imagem_carregada = imagem_aux;
+        loaded_image = imagem_aux;
     }
 
     private void canal_vermelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canal_vermelhoActionPerformed
-        new Image().canal_vermelho(imagem_carregada);
+        new Image().canal_vermelho(loaded_image);
 
         this.imagem_um_canal();
-        ImageIcon icon = new ImageIcon(imagem_carregada);
+        ImageIcon icon = new ImageIcon(loaded_image);
         imagem_tela.setIcon(icon);
-        setSize(imagem_carregada.getWidth() + 25, imagem_carregada.getHeight() + 70);
+        setSize(loaded_image.getWidth() + 25, loaded_image.getHeight() + 70);
     }//GEN-LAST:event_canal_vermelhoActionPerformed
 
     private void canal_verdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canal_verdeActionPerformed
-        new Image().canal_verde(imagem_carregada);
+        new Image().canal_verde(loaded_image);
 
         this.imagem_um_canal();
-        ImageIcon icon = new ImageIcon(imagem_carregada);
+        ImageIcon icon = new ImageIcon(loaded_image);
         imagem_tela.setIcon(icon);
-        setSize(imagem_carregada.getWidth() + 25, imagem_carregada.getHeight() + 70);
+        setSize(loaded_image.getWidth() + 25, loaded_image.getHeight() + 70);
     }//GEN-LAST:event_canal_verdeActionPerformed
 
     private void canal_azulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canal_azulActionPerformed
-        new Image().canal_azul(imagem_carregada);
+        new Image().canal_azul(loaded_image);
 
         this.imagem_um_canal();
-        ImageIcon icon = new ImageIcon(imagem_carregada);
+        ImageIcon icon = new ImageIcon(loaded_image);
         imagem_tela.setIcon(icon);
-        setSize(imagem_carregada.getWidth() + 25, imagem_carregada.getHeight() + 70);
+        setSize(loaded_image.getWidth() + 25, loaded_image.getHeight() + 70);
     }//GEN-LAST:event_canal_azulActionPerformed
 
     private void filtro_sepiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtro_sepiaActionPerformed
-        new Image().filtro_sepia(imagem_carregada);
-        this.imageUpdate(imagem_carregada, ALLBITS, 0, 0,
-                imagem_carregada.getWidth(), imagem_carregada.getHeight());
+        new Image().filtro_sepia(loaded_image);
+        this.imageUpdate(loaded_image, ALLBITS, 0, 0,
+                loaded_image.getWidth(), loaded_image.getHeight());
     }//GEN-LAST:event_filtro_sepiaActionPerformed
+
+    private void red_to_blueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_red_to_blueActionPerformed
+        new Image().red_to_blue(loaded_image);
+        this.imageUpdate(loaded_image, ALLBITS, 0, 0,
+                loaded_image.getWidth(), loaded_image.getHeight());
+    }//GEN-LAST:event_red_to_blueActionPerformed
+
+    private void manter_verdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manter_verdeActionPerformed
+        new Image().blue_to_red(loaded_image);
+        this.imageUpdate(loaded_image, ALLBITS, 0, 0,
+                loaded_image.getWidth(), loaded_image.getHeight());
+    }//GEN-LAST:event_manter_verdeActionPerformed
 
     
     public static void main(String args[]) {
@@ -312,10 +342,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem escala_de_cinza;
     private javax.swing.JMenuItem filtro_sepia;
     private javax.swing.JLabel imagem_tela;
+    private javax.swing.JMenuItem manter_verde;
     private javax.swing.JMenu menu_arquivo;
     private javax.swing.JMenu menu_imagem;
     private javax.swing.JMenuItem negativo;
     private javax.swing.JMenuItem reabrir_imagem;
+    private javax.swing.JMenuItem red_to_blue;
     private javax.swing.JMenuItem sair;
     private javax.swing.JMenuItem salvar;
     // End of variables declaration//GEN-END:variables
